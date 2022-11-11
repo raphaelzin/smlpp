@@ -1,15 +1,18 @@
 import { Link } from "./entity/Link";
 import { DataSource } from "typeorm";
+import dotenv from "dotenv";
+
+dotenv.config({ path: __dirname + "/../config/.env" });
 
 export const AppDataSource = new DataSource({
   type: "postgres",
-  host: "localhost",
-  port: 5432,
-  username: "test",
-  password: "test",
-  database: "test",
+  host: process.env.DB_HOST,
+  port: parseInt(process.env.DB_PORT ?? ""),
+  username: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME,
   synchronize: true,
-  logging: true,
+  logging: false,
   entities: [Link],
   subscribers: [],
   migrations: [],
@@ -22,4 +25,4 @@ AppDataSource.initialize()
   .then(() => {
     // here you can start to work with your database
   })
-  .catch((error) => console.log(error));
+  .catch((error) => console.log(`error! ${error}`));

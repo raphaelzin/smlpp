@@ -3,11 +3,10 @@ import { AppDataSource } from "../database/data-source";
 import { Link } from "../database/entity/Link";
 
 const router = express.Router();
-router.use(express.json);
+// router.use(express.json);
 
 router.post("/create", async (req: Request, res: Response) => {
   const { short, url } = req.body;
-
   if (short == undefined || url == undefined) {
     res.sendStatus(400);
   }
@@ -46,4 +45,4 @@ const followLink = async (req: Request, res: Response) => {
 };
 
 export { followLink as followLink };
-export { router as LinkRouter };
+export { router as linkRouter };
