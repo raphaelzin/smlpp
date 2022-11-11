@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "lib": ["es5", "es6"],
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": true
+  }
+}
