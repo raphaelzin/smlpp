@@ -1,4 +1,5 @@
 import { Link } from "./entity/Link";
+import { Redirect } from "./entity/Redirect";
 import { DataSource } from "typeorm";
 import dotenv from "dotenv";
 import { LinkRefactor1668201180972 } from "./migration/1668201180972-LinkRefactor";
@@ -12,9 +13,9 @@ export const AppDataSource = new DataSource({
   username: process.env.DB_USER,
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
-  synchronize: false,
+  synchronize: true,
   logging: false,
-  entities: [Link],
+  entities: [Link, Redirect],
   subscribers: [],
   migrations: [LinkRefactor1668201180972],
 });

@@ -21,6 +21,6 @@ export class Link {
   @Column()
   short: string;
 
-  @OneToMany((type) => Redirect, (redirect) => redirect.link)
+  @OneToMany(() => Redirect, (redirect) => redirect.link)
   redirects: Redirect[];
 }

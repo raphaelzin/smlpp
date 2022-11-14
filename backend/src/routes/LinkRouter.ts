@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import { AppDataSource } from "../database/data-source";
 import { Link } from "../database/entity/Link";
+import { Redirect } from "../database/entity/Redirect";
 
 const router = express.Router();
 
@@ -11,7 +12,6 @@ router.post("/create", async (req: Request, res: Response) => {
   }
 
   const link = new Link();
-  link.redirect_count = 0;
   link.short = short;
   link.url = url;
 
@@ -28,26 +28,25 @@ const followLink = async (req: Request, res: Response) => {
     res.sendStatus(400);
   }
 
-  const r = AppDataSource.createQueryRunner();
-  const count = await r.query(
-    `SELECT COUNT(*) FROM redirect WHERE link_id = ${1};`
-  );
-  console.log(count[0].count);
-
   const short = req.params.shortId;
   const repo = AppDataSource.getRepository(Link);
-
   try {
     const link = await repo.findOneByOrFail({
       short: short,
     });
-    console.log(link);
-    link.redirect_count += 1;
-    repo.save(link);
+    await createRedirectRecord(req.ip, link);
     res.redirect(link.url);
   } catch (e) {
+    console.log(e);
     res.sendStatus(404);
   }
+};
+
+const createRedirectRecord = async (ip: string, link: Link) => {
+  const redirect = new Redirect();
+  redirect.ip = ip;
+  redirect.link = link;
+  await AppDataSource.getRepository(Redirect).save(redirect);
 };
 
 export { followLink };
