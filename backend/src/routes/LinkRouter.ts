@@ -3,7 +3,6 @@ import { AppDataSource } from "../database/data-source";
 import { Link } from "../database/entity/Link";
 
 const router = express.Router();
-// router.use(express.json);
 
 router.post("/create", async (req: Request, res: Response) => {
   const { short, url } = req.body;
@@ -29,20 +28,27 @@ const followLink = async (req: Request, res: Response) => {
     res.sendStatus(400);
   }
 
+  const r = AppDataSource.createQueryRunner();
+  const count = await r.query(
+    `SELECT COUNT(*) FROM redirect WHERE link_id = ${1};`
+  );
+  console.log(count[0].count);
+
   const short = req.params.shortId;
   const repo = AppDataSource.getRepository(Link);
+
   try {
     const link = await repo.findOneByOrFail({
       short: short,
     });
+    console.log(link);
     link.redirect_count += 1;
     repo.save(link);
     res.redirect(link.url);
   } catch (e) {
-    console.log(e);
     res.sendStatus(404);
   }
 };
 
-export { followLink as followLink };
+export { followLink };
 export { router as linkRouter };

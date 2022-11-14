@@ -3,7 +3,9 @@ import {
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
+  OneToMany,
 } from "typeorm";
+import { Redirect } from "./Redirect";
 
 @Entity()
 export class Link {
@@ -19,6 +21,6 @@ export class Link {
   @Column()
   short: string;
 
-  @Column()
-  redirect_count: number;
+  @OneToMany((type) => Redirect, (redirect) => redirect.link)
+  redirects: Redirect[];
 }

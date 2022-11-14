@@ -1,6 +1,7 @@
 import { Link } from "./entity/Link";
 import { DataSource } from "typeorm";
 import dotenv from "dotenv";
+import { LinkRefactor1668201180972 } from "./migration/1668201180972-LinkRefactor";
 
 dotenv.config({ path: __dirname + "/../config/.env" });
 
@@ -11,11 +12,11 @@ export const AppDataSource = new DataSource({
   username: process.env.DB_USER,
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
-  synchronize: true,
+  synchronize: false,
   logging: false,
   entities: [Link],
   subscribers: [],
-  migrations: [],
+  migrations: [LinkRefactor1668201180972],
 });
 
 // to initialize initial connection with the database, register all entities
