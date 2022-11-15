@@ -1,24 +1,30 @@
 import express, { Request, Response } from "express";
-import { AppDataSource } from "../database/data-source";
-import { Link } from "../database/entity/Link";
-import { Redirect } from "../database/entity/Redirect";
+import { AppDataSource } from "../database/data-source.js";
+import { Link } from "../database/entity/Link.js";
+import { Redirect } from "../database/entity/Redirect.js";
+import { randomString } from "../util/util.js";
+import { Logger } from "tslog";
 
 const router = express.Router();
+const logger = new Logger();
 
 router.post("/create", async (req: Request, res: Response) => {
   const { short, url } = req.body;
-  if (short == undefined || url == undefined) {
-    res.sendStatus(400);
-  }
+  if (url == undefined) res.sendStatus(400);
 
   const link = new Link();
-  link.short = short;
   link.url = url;
+  link.short = short ?? "";
 
   try {
+    if (short == undefined) {
+      await AppDataSource.manager.save(link);
+      link.short = link.id + randomString(4);
+    }
     await AppDataSource.manager.save(link);
     res.send(link);
   } catch (e) {
+    logger.error(e);
     res.sendStatus(500);
   }
 });
@@ -37,7 +43,7 @@ const followLink = async (req: Request, res: Response) => {
     await createRedirectRecord(req.ip, link);
     res.redirect(link.url);
   } catch (e) {
-    console.log(e);
+    logger.error(e);
     res.sendStatus(404);
   }
 };

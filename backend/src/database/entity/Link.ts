@@ -5,7 +5,7 @@ import {
   CreateDateColumn,
   OneToMany,
 } from "typeorm";
-import { Redirect } from "./Redirect";
+import { Redirect } from "./Redirect.js";
 
 @Entity()
 export class Link {

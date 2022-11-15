@@ -1,12 +1,17 @@
 {
   "compilerOptions": {
-    "lib": ["es5", "es6"],
-    "module": "NodeNext",
+    "target": "ESNext",
+    "module": "Node16",
+    "moduleResolution": "nodenext",
+    "sourceMap": true,
+    "skipLibCheck": true,
     "noImplicitAny": true,
     "removeComments": true,
+    "esModuleInterop": true,
     "preserveConstEnums": true,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "sourceMap": true
-  }
+    "experimentalDecorators": true
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules"]
 }

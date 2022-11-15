@@ -1,6 +1,9 @@
 import express, { Express } from "express";
 import dotenv from "dotenv";
-import { followLink, linkRouter } from "./routes/LinkRouter";
+
+import { followLink, linkRouter } from "./routes/LinkRouter.js";
+import * as url from "url";
+const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 
 dotenv.config({ path: __dirname + "/config/.env" });
 

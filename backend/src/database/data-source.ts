@@ -1,8 +1,11 @@
-import { Link } from "./entity/Link";
-import { Redirect } from "./entity/Redirect";
+import { Link } from "./entity/Link.js";
+import { Redirect } from "./entity/Redirect.js";
 import { DataSource } from "typeorm";
 import dotenv from "dotenv";
-import { LinkRefactor1668201180972 } from "./migration/1668201180972-LinkRefactor";
+import { LinkRefactor1668201180972 } from "./migration/1668201180972-LinkRefactor.js";
+
+import * as url from "url";
+const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 
 dotenv.config({ path: __dirname + "/../config/.env" });
 

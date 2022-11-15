@@ -5,23 +5,25 @@
   "main": "./src/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node src/index.ts",
+    "start": "node --enable-source-maps --experimental-specifier-resolution=node --no-warnings --loader ts-node/esm ./src/index.ts",
     "typeorm": "typeorm-ts-node-commonjs"
   },
   "author": "",
   "license": "ISC",
+  "type": "module",
   "devDependencies": {
     "@types/express": "^4.17.14",
     "@types/node": "^18",
     "nodemon": "^2.0.20",
     "ts-node": "^10",
-    "typescript": "^4"
+    "typescript": "^4.8.4"
   },
   "dependencies": {
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "pg": "^8.4.0",
     "reflect-metadata": "^0.1.13",
+    "tslog": "^4.0.2",
     "typeorm": "0.3.10"
   }
 }
