@@ -12,16 +12,30 @@ router.post("/create", async (req: Request, res: Response) => {
   const { short, url } = req.body;
   if (url == undefined) res.sendStatus(400);
 
+  const repo = AppDataSource.getRepository(Link);
+  const existingLink = await repo.findOneBy({ url: url });
+
+  if (existingLink) {
+    res.send(existingLink);
+    return;
+  }
+
+  const existingShort = await repo.findOneBy({ short: short });
+  if (existingShort != undefined) {
+    res.send("Short already exists");
+    return;
+  }
+
   const link = new Link();
   link.url = url;
   link.short = short ?? "";
 
   try {
     if (short == undefined) {
-      await AppDataSource.manager.save(link);
+      await repo.save(link);
       link.short = link.id + randomString(4);
     }
-    await AppDataSource.manager.save(link);
+    await repo.save(link);
     res.send(link);
   } catch (e) {
     logger.error(e);

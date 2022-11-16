@@ -3,6 +3,7 @@ import { Redirect } from "./entity/Redirect.js";
 import { DataSource } from "typeorm";
 import dotenv from "dotenv";
 import { LinkRefactor1668201180972 } from "./migration/1668201180972-LinkRefactor.js";
+import { AddHashIndex1668614849315 } from "./migration/1668614849315-AddHashIndex.js";
 
 import * as url from "url";
 const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
@@ -20,7 +21,7 @@ export const AppDataSource = new DataSource({
   logging: false,
   entities: [Link, Redirect],
   subscribers: [],
-  migrations: [LinkRefactor1668201180972],
+  migrations: [LinkRefactor1668201180972, AddHashIndex1668614849315],
 });
 
 // to initialize initial connection with the database, register all entities

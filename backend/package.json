@@ -6,8 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node --enable-source-maps --experimental-specifier-resolution=node --no-warnings --loader ts-node/esm ./src/index.ts",
-    "typeorm": "typeorm-ts-node-commonjs"
+    "typeorm": "ts-node-esm ./node_modules/.bin/typeorm",
+    "dev:server": "nodemon --watch './**/*.ts' --exec 'node --experimental-specifier-resolution=node --loader ts-node/esm' src/index.ts"
   },
+  "exports": "./dist/index.js",
   "author": "",
   "license": "ISC",
   "type": "module",
